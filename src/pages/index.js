@@ -1,8 +1,10 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import styles from "@/styles/Home.module.css";
-import { Button, Container, Paper, Select, Stack, TextInput, Title } from "@mantine/core";
+import { Button, Container, Paper, Select, Stack, Table, TextInput, Title } from "@mantine/core";
 import { useState } from "react";
 import { useForm } from "@mantine/form";
+import DomainTable from "./components/DomainTable";
+import ContactInfoTable from "./components/ContactInfoTable";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -72,6 +74,8 @@ export default function Home() {
       setLoading(false);
     }
   };
+
+
   return (
     <>
 
@@ -102,6 +106,16 @@ export default function Home() {
             </Stack>
           </Paper>
         </form>
+
+        {console.log(results)}
+        {results && form.values.infoType === 'domain' && <DomainTable values={results} />}
+        {results && form.values.infoType === 'contact' && <ContactInfoTable values={results} />}
+        {error && (
+          <Paper withBorder shadow="md" p="xl" className={styles.errorContainer}>
+            <Title order={2}>Error</Title>
+            <p>{error}</p>
+          </Paper>
+        )}
       </Container>
     </>
   );
